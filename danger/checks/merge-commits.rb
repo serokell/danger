@@ -1,25 +1,23 @@
 # SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io>
 # SPDX-License-Identifier: MPL-2.0
 
-require_relative '../helpers'
-
+require_relative "../helpers"
 
 class Danger::Dangerfile
   def merge_commits_default_config
     SerokellDanger::Config.new(
-      'merge-commits',
+      "merge-commits",
       {
         detect: %i[parents],
         merge_commit_subject_patterns: [
           /\AMerge branch\b/,
           /\AMerge remote-tracking branch\b/,
-          /\AMerge pull request\b/,
+          /\AMerge pull request\b/
         ],
         skip_if_title_matches: default_branch_merge_title_patterns,
-        severity: :fail,
+        severity: :fail
       },
-      
-      configure_with: 'check_merge_commits'
+      configure_with: "check_merge_commits"
     )
   end
 
@@ -40,9 +38,9 @@ class Danger::Dangerfile
 
     danger_report(
       config, :detect,
-      'Please, no merge commits, rebase for the win. Found: ' \
-      "#{offenders.map { |c| "#{c.short_ref} (#{c.subject_ticked})" }.join(', ')}.",
-      hint: 'detect: nil'
+      "Please, no merge commits, rebase for the win. Found: " \
+      "#{offenders.map { |c| "#{c.short_ref} (#{c.subject_ticked})" }.join(", ")}.",
+      hint: "detect: nil"
     )
   end
 end
