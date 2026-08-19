@@ -1,0 +1,7 @@
+# Bundler
+/.bundle/
+/Gemfile.lock
+
+# Gem build artifacts
+/pkg/
+/*.gem
