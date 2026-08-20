@@ -10,7 +10,8 @@ exclusions:
   ignoreExternalRefsTo:
     - "https://app.notion.com/.*"
     # TODO: remove once this repo goes public. While it's private, GitHub
-    # returns 404 (not 403) for its own issues/PRs to an unauthenticated
-    # request, indistinguishable from a genuinely broken link. Once public,
-    # this exclusion would silently hide real broken issue/PR links instead.
-    - "https://github\\.com/serokell/danger/(issues|pull)(/.*)?"
+    # returns 404 (not 403) for any of its own pages (issues, PRs, Actions
+    # runs, etc.) to an unauthenticated request, indistinguishable from a
+    # genuinely broken link. Once public, this exclusion would silently
+    # hide real broken links instead.
+    - "https://github\\.com/serokell/danger(/.*)?"
