@@ -10,3 +10,7 @@ group :development do
   gem "ruby-lsp"
   gem "standard"
 end
+
+group :test do
+  gem "rspec"
+end
