@@ -2,11 +2,5 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-source "https://rubygems.org"
-
-gemspec
-
-group :development do
-  gem "ruby-lsp"
-  gem "standard"
-end
+require_relative "serokell_danger/version"
+require_relative "serokell_danger/all"

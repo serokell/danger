@@ -2,11 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-source "https://rubygems.org"
-
-gemspec
-
-group :development do
-  gem "ruby-lsp"
-  gem "standard"
+module SerokellDanger
+  VERSION = "0.1.0"
 end
