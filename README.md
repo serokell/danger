@@ -39,7 +39,7 @@ host.
 
 ## Install
 
-Not yet published to a gem registry. Add it straight from this repository:
+Published as a git source:
 
 ```ruby
 # Gemfile
