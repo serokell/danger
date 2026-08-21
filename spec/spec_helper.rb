@@ -34,7 +34,7 @@ end
 
 # A real Danger::Dangerfile, with our checks monkey-patched onto it via
 # `require "serokell_danger"` above. git/github access still needs
-# stubbing per-example (see spec/support/doubles.rb).
+# stubbing per-example (see spec/support/danger_testing.rb).
 def testing_dangerfile
   env = Danger::EnvironmentManager.new(testing_env)
   Danger::Dangerfile.new(env, testing_ui)

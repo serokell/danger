@@ -10,5 +10,7 @@ check_merge_request
 check_merge_commits
 check_license_headers
 check_trailing_whitespace(
-  trailing_whitespace_default_config.with(ignore_paths: ["LICENSE", "LICENSES/"])
+  trailing_whitespace_default_config.with(
+    ignore_paths: ["LICENSE", "LICENSES/", "spec/fixtures/"]
+  )
 )
