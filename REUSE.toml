@@ -17,3 +17,9 @@ path = "spec/fixtures/pull_request_event.json"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Serokell <https://serokell.io>"
 SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "spec/fixtures/no_license_header.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Serokell <https://serokell.io>"
+SPDX-License-Identifier = "MPL-2.0"
