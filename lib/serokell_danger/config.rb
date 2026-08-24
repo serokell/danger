@@ -1,13 +1,11 @@
-# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io>
+# SPDX-FileCopyrightText: 2026 Serokell <https://serokell.io>
 # SPDX-License-Identifier: MPL-2.0
 
 module SerokellDanger
   class Config
     attr_reader :check_name
 
-    
     attr_reader :configure_with
-
 
     def initialize(check_name, values, configure_with: nil)
       @check_name = check_name
@@ -50,7 +48,7 @@ module SerokellDanger
       end
       Config.new(@check_name, new_values, configure_with: @configure_with)
     end
-    alias with merge
+    alias_method :with, :merge
 
     def method_missing(name, *args)
       if args.empty? && @values.key?(name)
@@ -74,8 +72,8 @@ module SerokellDanger
       return if @values.key?(key)
 
       raise ArgumentError,
-            "Unknown option `#{key}` for the `#{@check_name}` check. " \
-            "Known options: #{@values.keys.sort.join(', ')}."
+        "Unknown option `#{key}` for the `#{@check_name}` check. " \
+        "Known options: #{@values.keys.sort.join(", ")}."
     end
   end
 end

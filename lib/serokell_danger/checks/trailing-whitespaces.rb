@@ -1,21 +1,21 @@
-# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io>
+# SPDX-FileCopyrightText: 2026 Serokell <https://serokell.io>
 # SPDX-License-Identifier: MPL-2.0
 
-require_relative '../helpers'
+require_relative "../helpers"
 
 class Danger::Dangerfile
   def trailing_whitespace_default_config
     SerokellDanger::Config.new(
-      'trailing-whitespace',
+      "trailing-whitespace",
       {
         trailing_whitespace: true,
         final_newline: true,
         extra_final_newlines: true,
         file_extensions: nil,
         ignore_paths: [],
-        severity: :fail,
+        severity: :fail
       },
-      configure_with: 'check_trailing_whitespace'
+      configure_with: "check_trailing_whitespace"
     )
   end
   alias_method :trailing_whitespaces_default_config, :trailing_whitespace_default_config
@@ -44,9 +44,9 @@ class Danger::Dangerfile
     end
 
     {
-      trailing_whitespace: 'Trailing whitespaces detected',
-      final_newline: 'Missing newlines at the end of file detected',
-      extra_final_newlines: 'Extra newlines at the end of file detected',
+      trailing_whitespace: "Trailing whitespaces detected",
+      final_newline: "Missing newlines at the end of file detected",
+      extra_final_newlines: "Extra newlines at the end of file detected"
     }.each do |rule, summary|
       next if counts[rule].zero?
 
@@ -99,7 +99,7 @@ class Danger::Dangerfile
 
   def extra_final_newlines_message(extra_lines)
     if extra_lines == 1
-      'Extra newline at the end of the file.'
+      "Extra newline at the end of the file."
     else
       "#{extra_lines} extra newlines at the end of the file."
     end
@@ -109,7 +109,7 @@ class Danger::Dangerfile
     if mr_context?
       githost.suggestion_fence(above: above, below: below)
     else
-      'suggestion'
+      "suggestion"
     end
   end
 

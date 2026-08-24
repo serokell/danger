@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# Bundler
+/.bundle/
+/Gemfile.lock
+
+# Gem build artifacts
+/pkg/
+/*.gem

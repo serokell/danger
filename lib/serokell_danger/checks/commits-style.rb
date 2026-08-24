@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io>
+# SPDX-FileCopyrightText: 2026 Serokell <https://serokell.io>
 # SPDX-License-Identifier: MPL-2.0
 
-require_relative '../helpers'
-require_relative '../issue-prefix'
+require_relative "../helpers"
+require_relative "../issue-prefix"
 
 class Danger::Dangerfile
   def default_wip_commit_patterns
@@ -15,7 +15,7 @@ class Danger::Dangerfile
 
   def commits_style_default_config
     SerokellDanger::Config.new(
-      'commits-style',
+      "commits-style",
       {
         wip_commit_patterns: default_wip_commit_patterns,
         fixup_commit_patterns: default_fixup_commit_patterns,
@@ -30,7 +30,7 @@ class Danger::Dangerfile
         require_description: true,
         blank_line_after_subject: true,
         commit_description_patterns: [
-          /^Problem:[ \n].*^Solution:[ \n]/m,
+          /^Problem:[ \n].*^Solution:[ \n]/m
         ],
         description_escape_hatch: /I don't care about templates/,
         max_line_length: 72,
@@ -39,10 +39,10 @@ class Danger::Dangerfile
         severity: :warn,
         severities: {
           max_subject_length_hard: :fail,
-          require_description: :fail,
-        },
+          require_description: :fail
+        }
       },
-      configure_with: 'check_commits_style'
+      configure_with: "check_commits_style"
     )
   end
 
@@ -69,7 +69,7 @@ class Danger::Dangerfile
 
     markdown(
       "[#{config.check_name}] Every rule above can be turned off in `#{config.configure_with}`. " \
-      'A single commit is exempt from all of them if its subject is marked as a work in ' \
+      "A single commit is exempt from all of them if its subject is marked as a work in " \
       "progress (#{describe_patterns(config[:wip_commit_patterns])}) or as a fixup " \
       "(#{describe_patterns(config[:fixup_commit_patterns])})."
     )
@@ -88,14 +88,14 @@ class Danger::Dangerfile
         :commit_msg_prefix,
         "Commit #{ref} lacks an issue ID: #{ticked}. Expected the subject to start with " \
         "one of: #{SerokellDanger.issue_prefix_examples(prefix_config)}.",
-        hint: 'commit_msg_prefix: nil'
+        hint: "commit_msg_prefix: nil"
       )
     end
 
     payload = prefix_config ? SerokellDanger.strip_issue_prefix(subject, prefix_config) : subject
     separator = prefix_config && SerokellDanger.issue_prefix_separator(subject, prefix_config)
 
-    if config[:subject_spacing] && separator && separator != ' '
+    if config[:subject_spacing] && separator && separator != " "
       report.call(
         :subject_spacing,
         "Expected exactly one space between the issue prefix and the rest of the subject " \
@@ -110,7 +110,7 @@ class Danger::Dangerfile
       )
     end
 
-    if config[:subject_no_trailing_dot] && subject.end_with?('.')
+    if config[:subject_no_trailing_dot] && subject.end_with?(".")
       report.call(
         :subject_no_trailing_dot,
         "Subject of commit #{ref} ends with a dot: #{ticked}."
@@ -187,12 +187,12 @@ class Danger::Dangerfile
     in_fence = false
     description.lines.each_with_index.filter_map do |line, index|
       line = line.chomp
-      if line.strip.start_with?('```')
+      if line.strip.start_with?("```")
         in_fence = !in_fence
         next
       end
       next if in_fence
-      next if line.start_with?('    ', "\t")
+      next if line.start_with?("    ", "\t")
       next if line.length <= limit
       next if line.split(/\s+/).any? { |token| token.length > limit }
 
@@ -203,7 +203,7 @@ class Danger::Dangerfile
   def describe_patterns(patterns)
     SerokellDanger::Util.as_list(patterns).map do |pattern|
       pattern.is_a?(Regexp) ? "`#{pattern.source}`" : "`#{pattern}`"
-    end.join(', ')
+    end.join(", ")
   end
 
   public

@@ -1,12 +1,12 @@
-# SPDX-FileCopyrightText: 2023 Serokell <https://serokell.io>
+# SPDX-FileCopyrightText: 2026 Serokell <https://serokell.io>
 # SPDX-License-Identifier: MPL-2.0
 
-require_relative '../helpers'
+require_relative "../helpers"
 
 class Danger::Dangerfile
   def license_headers_default_config
     SerokellDanger::Config.new(
-      'license-headers',
+      "license-headers",
       {
         scan: :added_files,
         file_extensions: nil,
@@ -18,14 +18,12 @@ class Danger::Dangerfile
         check_year: true,
         expected_holder: nil,
 
-        severity: :warn,
+        severity: :warn
       },
-      configure_with: 'check_license_headers'
+      configure_with: "check_license_headers"
     )
   end
 
-
-  
   def check_license_headers(config = license_headers_default_config)
     return if danger_check_skipped?(config)
 
@@ -60,7 +58,7 @@ class Danger::Dangerfile
   def license_header_match(path, config)
     File.foreach(path).with_index(1) do |line, number|
       match = config[:copyright_line_pattern].match(line)
-      return { match: match, line_number: number, line: line.chomp } if match
+      return {match: match, line_number: number, line: line.chomp} if match
     end
     nil
   rescue ArgumentError, SystemCallError
@@ -69,8 +67,8 @@ class Danger::Dangerfile
 
   def check_license_header_line(path, header, config)
     match = header[:match]
-    years = named_capture(match, 'years').to_s
-    holder = named_capture(match, 'holder').to_s.strip
+    years = named_capture(match, "years").to_s
+    holder = named_capture(match, "holder").to_s.strip
     current_year = Time.now.year.to_s
     first_year, last_year = years.split(/\s*-\s*/)
     last_year ||= first_year
@@ -81,7 +79,7 @@ class Danger::Dangerfile
     end
     if config[:expected_holder] && holder != config[:expected_holder].to_s
       problems << [:expected_holder,
-                   "the copyright holder is `#{holder}`, expected `#{config[:expected_holder]}`"]
+        "the copyright holder is `#{holder}`, expected `#{config[:expected_holder]}`"]
     end
     return if problems.empty?
 
@@ -92,11 +90,11 @@ class Danger::Dangerfile
       )
     end
 
-    suggested_years = first_year == last_year ? current_year : "#{first_year}-#{current_year}"
+    suggested_years = (first_year == last_year) ? current_year : "#{first_year}-#{current_year}"
     suggested_years = years if problems.none? { |rule, _| rule == :check_year }
     suggested_holder = config[:expected_holder] || holder
-    suggested = "#{named_capture(match, 'prefix')} #{suggested_years} #{suggested_holder}"
-    fence = mr_context? ? githost.suggestion_fence : 'suggestion'
+    suggested = "#{named_capture(match, "prefix")} #{suggested_years} #{suggested_holder}"
+    fence = mr_context? ? githost.suggestion_fence : "suggestion"
     markdown(
       "```#{fence}\n#{suggested}\n```",
       file: path, line: header[:line_number]
