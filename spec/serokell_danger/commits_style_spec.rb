@@ -14,7 +14,7 @@ RSpec.describe "commits-style check" do
   # `make_config(commit_msg_prefix: nil, max_line_length: nil)` to silence
   # unrelated rules while testing one in isolation.
   def make_config(**overrides)
-    dangerfile.commits_style_default_config.merge({skip_if_title_matches: nil}.merge(overrides))
+    make_config_from_default(:commits_style_default_config, **overrides)
   end
 
   def set_rule_receive_expectations(rules_to_test)

@@ -70,7 +70,7 @@ RSpec.shared_context "danger testing" do
   def make_commit(
     subject:,
     description: "Problem: This is a placeholder description.\n\nSolution: It exists so unrelated rules don't fire.\n",
-    blank_line_after_subject: true, short_ref: "deadbeef"
+    blank_line_after_subject: true, short_ref: "deadbeef", parents: [nil]
   )
     commit = instance_double(
       Git::Object::Commit,
@@ -78,7 +78,8 @@ RSpec.shared_context "danger testing" do
       subject_ticked: "`#{subject.tr("`", "'")}`",
       description: description,
       blank_line_after_subject?: blank_line_after_subject,
-      short_ref: short_ref
+      short_ref: short_ref,
+      parents: parents
     )
     allow(commit).to receive(:subject_matches?) { |patterns| SerokellDanger::Util.matches_any?(subject, patterns) }
     commit
@@ -86,5 +87,12 @@ RSpec.shared_context "danger testing" do
 
   def set_commits(*commits)
     allow(dangerfile.git).to receive(:commits).and_return(commits)
+  end
+
+  # Builds a config from a check's real default config (e.g.
+  # :commits_style_default_config), overriding skip_if_title_matches to
+  # nil unless overrides sets it.
+  def make_config_from_default(default_config_method, **overrides)
+    dangerfile.public_send(default_config_method).merge({skip_if_title_matches: nil}.merge(overrides))
   end
 end
