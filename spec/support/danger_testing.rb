@@ -25,13 +25,13 @@ RSpec.shared_context "danger testing" do
     allow(dangerfile.git).to receive(:modified_files).and_return(modified_files)
   end
 
-  # Stubs dangerfile.githost to a fake PR/MR with the given title.
-  # host is :github or :gitlab.
-  def stub_githost(host, title:)
+  # Stubs dangerfile.githost to a fake PR/MR with the given title and
+  # body. host is :github or :gitlab.
+  def stub_githost(host, title:, body: "")
     plugin =
       case host
-      when :github then double("plugin", pr_title: title, pr_body: "")
-      when :gitlab then double("plugin", mr_title: title, mr_body: "")
+      when :github then double("plugin", pr_title: title, pr_body: body)
+      when :gitlab then double("plugin", mr_title: title, mr_body: body)
       else raise ArgumentError, "expected :github or :gitlab, got #{host.inspect}"
       end
     allow(dangerfile).to receive(:githost).and_return(SerokellDanger::GitHost.new(plugin, host))
@@ -93,6 +93,8 @@ RSpec.shared_context "danger testing" do
   # :commits_style_default_config), overriding skip_if_title_matches to
   # nil unless overrides sets it.
   def make_config_from_default(default_config_method, **overrides)
-    dangerfile.public_send(default_config_method).merge({skip_if_title_matches: nil}.merge(overrides))
+    default_config = dangerfile.public_send(default_config_method)
+    values = default_config.to_h.merge(skip_if_title_matches: nil, **overrides)
+    SerokellDanger::Config.new(default_config.check_name, values, configure_with: default_config.configure_with)
   end
 end
