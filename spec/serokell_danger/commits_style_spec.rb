@@ -188,4 +188,11 @@ RSpec.describe "commits-style check" do
       expect(dangerfile).not_to receive(:markdown)
     end
   end
+
+  it "does nothing when there are no commits" do
+    config = make_config
+    set_commits
+    set_rule_receive_expectations({})
+    dangerfile.check_commits_style(config)
+  end
 end

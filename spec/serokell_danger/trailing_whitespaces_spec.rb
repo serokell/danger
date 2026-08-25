@@ -124,4 +124,12 @@ RSpec.describe "trailing-whitespace check" do
       skip_if_title_matches: dangerfile.default_branch_merge_title_patterns
     )
   end
+
+  it "does nothing when the diff is empty" do
+    rules = [:trailing_whitespace, :final_newline, :extra_final_newlines]
+    config = make_config(rules)
+    allow(dangerfile.git).to receive(:diff).and_return([])
+    set_rule_receive_expectations({})
+    dangerfile.check_trailing_whitespace(config)
+  end
 end

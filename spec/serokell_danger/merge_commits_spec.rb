@@ -95,4 +95,8 @@ RSpec.describe "merge-commits check" do
       skip_if_title_matches: dangerfile.default_branch_merge_title_patterns
     )
   end
+
+  it "does nothing when there are no commits" do
+    simple_test([], {})
+  end
 end

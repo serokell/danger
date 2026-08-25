@@ -126,6 +126,10 @@ RSpec.describe "license-headers check" do
     simple_test({}, added_files: [nonexistent_file])
   end
 
+  it "does nothing when there are no tracked files at all" do
+    simple_test({})
+  end
+
   it "raises for an invalid scan value" do
     config = make_config(scan: :invalid)
 
