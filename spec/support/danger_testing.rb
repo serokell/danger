@@ -46,17 +46,45 @@ RSpec.shared_context "danger testing" do
   #
   # keyword_params lists the keyword arguments danger_report is called
   # with (e.g. `[:file, :line]`), so they get matched too (or defaulted
-  # to `anything`).
+  # to `anything`). Pass an Array to use it for every rule, or a Hash to
+  # use a different list per rule, e.g. `{check_year: [:file, :line],
+  # expected_holder: [:file]}`.
   def set_danger_report_expectations(possible_rules, rules_to_test, keyword_params: [])
     possible_rules.each do |rule|
+      rule_keyword_params =
+        keyword_params.is_a?(Hash) ? keyword_params.fetch(rule, []) : keyword_params
+
       if rules_to_test.key?(rule)
         attrs = rules_to_test[rule]
-        keywords = keyword_params.to_h { |param| [param, attrs.fetch(param, anything)] }
+        keywords = rule_keyword_params.to_h { |param| [param, attrs.fetch(param, anything)] }
         expect(dangerfile).to receive(:danger_report).with(anything, rule, attrs.fetch(:text, anything), **keywords)
       else
-        keywords = keyword_params.to_h { |param| [param, anything] }
+        keywords = rule_keyword_params.to_h { |param| [param, anything] }
         expect(dangerfile).not_to receive(:danger_report).with(anything, rule, anything, **keywords)
       end
     end
+  end
+
+  # Builds a fake commit with the given subject, description, and other
+  # attributes used by the checks.
+  def make_commit(
+    subject:,
+    description: "Problem: This is a placeholder description.\n\nSolution: It exists so unrelated rules don't fire.\n",
+    blank_line_after_subject: true, short_ref: "deadbeef"
+  )
+    commit = instance_double(
+      Git::Object::Commit,
+      subject: subject,
+      subject_ticked: "`#{subject.tr("`", "'")}`",
+      description: description,
+      blank_line_after_subject?: blank_line_after_subject,
+      short_ref: short_ref
+    )
+    allow(commit).to receive(:subject_matches?) { |patterns| SerokellDanger::Util.matches_any?(subject, patterns) }
+    commit
+  end
+
+  def set_commits(*commits)
+    allow(dangerfile.git).to receive(:commits).and_return(commits)
   end
 end
