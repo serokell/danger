@@ -21,6 +21,17 @@ jobs:
           bundler-cache: true
       - run: bundle exec standardrb
 
+  rspec:
+    name: RSpec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rspec
+
   reuse:
     name: REUSE Compliance Check
     runs-on: ubuntu-latest
