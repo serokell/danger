@@ -25,6 +25,17 @@ Our pull request template contains a [checklist](.github/pull_request_template.m
 of acceptance criteria for your pull request. Please read it before you start
 contributing and make sure your contributions adhere to this checklist.
 
+### Running tests and lints
+
+```sh
+bundle install
+bundle exec rspec         # run the test suite
+bundle exec standardrb    # lint
+bundle exec reuse lint    # REUSE/SPDX compliance
+```
+
+All three run in CI on every pull request.
+
 ## Legal
 
 We want to make sure that our projects come with correct licensing information
