@@ -32,9 +32,16 @@ bundle install
 bundle exec rspec         # run the test suite
 bundle exec standardrb    # lint
 bundle exec reuse lint    # REUSE/SPDX compliance
+xrefcheck                 # check for broken links between files
 ```
 
-All three run in CI on every pull request.
+All four run in CI on every pull request. `xrefcheck` isn't a Ruby
+gem; see [serokell/xrefcheck](https://github.com/serokell/xrefcheck)
+for installation instructions.
+
+`bundle exec rspec` also produces a test coverage report via
+[SimpleCov](https://github.com/simplecov-ruby/simplecov), written to
+`coverage/index.html`, and fails the run if coverage drops below 90%.
 
 ## Legal
 
