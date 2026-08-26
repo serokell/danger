@@ -9,3 +9,6 @@
 # Gem build artifacts
 /pkg/
 /*.gem
+
+# Test coverage report
+/coverage/
