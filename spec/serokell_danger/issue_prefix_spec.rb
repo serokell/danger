@@ -19,6 +19,12 @@ RSpec.describe SerokellDanger do
       expect(valid?("[SRK-160] Fix bug", config)).to be true
     end
 
+    it "recognizes a youtrack-style issue prefix whose project key starts with a digit" do
+      config = {kinds: [:youtrack_issue]}
+      expect(valid?("[1AB-123] Fix bug", config)).to be true
+      expect(valid?("[42XY-456] Fix bug", config)).to be true
+    end
+
     it "recognizes a chore prefix" do
       expect(valid?("[Chore] Cleanup", {kinds: [:chore]})).to be true
     end

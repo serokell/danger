@@ -4,10 +4,12 @@
 require_relative "config"
 
 module SerokellDanger
+  YOUTRACK_ISSUE_KEY_PATTERN = /[A-Z0-9]+-\d+/
+
   ISSUE_PREFIX_KINDS = {
     github_issue: /\[#\d+\]/,
     gitlab_issue: /\[#\d+\]/,
-    youtrack_issue: /\[[A-Z][A-Z0-9]*-\d+\]/,
+    youtrack_issue: /\[#{YOUTRACK_ISSUE_KEY_PATTERN}\]/,
     chore: /\[Chore\]/
   }.freeze
 

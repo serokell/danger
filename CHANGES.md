@@ -19,3 +19,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   title/body (#6).
 - Fixed a typo in `check_merge_request`'s `ticket_links.scan` error message
   ("expecs" → "expects") (#6).
+- The `youtrack_issue` prefix pattern now accepts project keys that start
+  with a digit (e.g. `1AB`, `42XY`), which it previously rejected (#7).
