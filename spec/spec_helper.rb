@@ -2,6 +2,12 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
+  minimum_coverage 90
+end
+
 require "danger"
 require "serokell_danger"
 

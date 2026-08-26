@@ -31,6 +31,11 @@ jobs:
           ruby-version: "3.4"
           bundler-cache: true
       - run: bundle exec rspec
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
 
   reuse:
     name: REUSE Compliance Check
