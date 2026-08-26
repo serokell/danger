@@ -4,8 +4,8 @@
 
 require "simplecov"
 SimpleCov.start do
-  add_filter "/spec/"
-  minimum_coverage 90
+  skip "/spec/"
+  minimum_coverage 95
 end
 
 require "danger"
