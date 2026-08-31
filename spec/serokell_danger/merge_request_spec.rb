@@ -54,6 +54,20 @@ RSpec.describe "merge-request check" do
     simple_test({ticket_links: {}}, title: "[#4] Issue prefix", body: "Fixes SRK-160")
   end
 
+  it "reports a ticket link whose project key starts with a digit" do
+    simple_test(
+      {
+        ticket_links: {
+          text: "Mentioned YouTrack tickets: " \
+            "[1AB-123](https://issues.serokell.io/issue/1AB-123), " \
+            "[42XY-456](https://issues.serokell.io/issue/42XY-456)."
+        }
+      },
+      title: "[#4] Issue prefix",
+      body: "Fixes 1AB-123 and 42XY-456"
+    )
+  end
+
   it "does not scan the body for ticket links when ticket_links.scan does not include :body" do
     simple_test(
       {},
@@ -63,7 +77,7 @@ RSpec.describe "merge-request check" do
         "ticket-links",
         {
           scan: %i[title],
-          pattern: /\b[A-Z][A-Z0-9]*-\d+\b/,
+          pattern: /\b#{SerokellDanger::YOUTRACK_ISSUE_KEY_PATTERN}\b/o,
           base_url: "https://issues.serokell.io/issue/",
           tracker_name: "YouTrack"
         }
@@ -94,7 +108,7 @@ RSpec.describe "merge-request check" do
         "ticket-links",
         {
           scan: %i[this_item_does_not_exist],
-          pattern: /\b[A-Z][A-Z0-9]*-\d+\b/,
+          pattern: /\b#{SerokellDanger::YOUTRACK_ISSUE_KEY_PATTERN}\b/o,
           base_url: "https://issues.serokell.io/issue/",
           tracker_name: "YouTrack"
         }
