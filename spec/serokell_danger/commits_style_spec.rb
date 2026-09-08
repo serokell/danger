@@ -86,6 +86,13 @@ RSpec.describe "commits-style check" do
     )
   end
 
+  it "warns about a subject with a trailing dot followed by trailing whitespace" do
+    simple_test(
+      make_commit(subject: "[#4] Trailing dot in subject. "),
+      {subject_no_trailing_dot: {}}
+    )
+  end
+
   it "warns about a subject longer than max_subject_length" do
     simple_test(
       make_commit(subject: "[#4] This subject is too long and should be rejected by max_subject_length"),

@@ -21,3 +21,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   ("expecs" → "expects") (#6).
 - The `youtrack_issue` prefix pattern now accepts project keys that start
   with a digit (e.g. `1AB`, `42XY`), which it previously rejected (#7).
+- `subject_no_trailing_dot` now flags a commit subject whose trailing dot
+  is followed by trailing whitespace, which it previously missed (#9).
