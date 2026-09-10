@@ -33,17 +33,17 @@ module SerokellDanger
     end
 
     def mr_title
-      plugin.mr_title.to_s
+      githost_switch(:pr_title, :mr_title).to_s
     end
     alias_method :pr_title, :mr_title
 
     def mr_body
-      plugin.mr_body.to_s
+      githost_switch(:pr_body, :mr_body).to_s
     end
     alias_method :pr_body, :mr_body
 
     def mr_json
-      plugin.mr_json
+      githost_switch(:pr_json, :mr_json)
     end
     alias_method :pr_json, :mr_json
 
@@ -105,6 +105,11 @@ module SerokellDanger
     end
 
     private
+
+    def githost_switch(on_github, on_gitlab, *args, **kwargs, &block)
+      return plugin.public_send(on_github, *args, **kwargs, &block) if github? && plugin.respond_to?(on_github)
+      plugin.public_send(on_gitlab, *args, **kwargs, &block)
+    end
 
     def json_field(gitlab_key, github_key)
       json = mr_json

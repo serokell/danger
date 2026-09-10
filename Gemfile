@@ -10,3 +10,8 @@ group :development do
   gem "ruby-lsp"
   gem "standard"
 end
+
+group :test do
+  gem "rspec"
+  gem "simplecov", require: false
+end

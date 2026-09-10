@@ -54,7 +54,7 @@ class Danger::Dangerfile
       case where.to_sym
       when :title then title
       when :body then body
-      else raise ArgumentError, "`ticket_links.scan` expecs :title and/or :body, got #{where.inspect}."
+      else raise ArgumentError, "`ticket_links.scan` expects :title and/or :body, got #{where.inspect}."
       end
     end.join("\n")
 
