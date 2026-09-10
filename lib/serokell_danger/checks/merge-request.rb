@@ -15,7 +15,7 @@ class Danger::Dangerfile
           "ticket-links",
           {
             scan: %i[title body],
-            pattern: /\b[A-Z][A-Z0-9]*-\d+\b/,
+            pattern: /\b#{SerokellDanger::YOUTRACK_ISSUE_KEY_PATTERN}\b/o,
             base_url: "https://issues.serokell.io/issue/",
             tracker_name: "YouTrack"
           }
