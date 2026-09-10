@@ -110,7 +110,7 @@ class Danger::Dangerfile
       )
     end
 
-    if config[:subject_no_trailing_dot] && subject.end_with?(".")
+    if config[:subject_no_trailing_dot] && subject.rstrip.end_with?(".")
       report.call(
         :subject_no_trailing_dot,
         "Subject of commit #{ref} ends with a dot: #{ticked}."
